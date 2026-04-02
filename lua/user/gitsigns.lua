@@ -26,8 +26,6 @@ gitsigns.setup {
     virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
     delay = 1000,
     ignore_whitespace = false,
-  },
-  current_line_blame_formatter_opts = {
     relative_time = false,
   },
   sign_priority = 6,
@@ -41,8 +39,5 @@ gitsigns.setup {
     relative = "cursor",
     row = 0,
     col = 1,
-  },
-  yadm = {
-    enable = false,
   },
 }
