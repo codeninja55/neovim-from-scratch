@@ -4,6 +4,60 @@ return {
     -- event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
   },
+  -- Auto-install all LSP servers, formatters, and linters via Mason
+  -- Mason package names (kebab-case) are used here, not LSP server names
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    opts = {
+      ensure_installed = {
+        -- Go
+        "gopls", "golangci-lint-langserver", "golangci-lint",
+        "gofumpt", "goimports", "gotests",
+
+        -- TypeScript / JavaScript
+        "typescript-language-server", "eslint-lsp", "biome", "prettier",
+
+        -- Deno
+        "deno",
+
+        -- Python
+        "pyright", "ruff", "black",
+
+        -- Bash
+        "bash-language-server", "shfmt",
+
+        -- Terraform / OpenTofu
+        "terraform-ls",
+
+        -- Markdown
+        "marksman", "markdownlint-cli2", "markdown-toc",
+
+        -- Data formats
+        "json-lsp", "yaml-language-server", "yamllint",
+
+        -- Kubernetes / Helm
+        "helm-ls",
+
+        -- Web
+        "html-lsp", "css-lsp",
+
+        -- Containers
+        "docker-language-server", "docker-compose-language-service",
+        "dockerfile-language-server",
+
+        -- GitHub Actions
+        "gh-actions-language-server",
+
+        -- Lua
+        "lua-language-server", "stylua",
+
+        -- General
+        "ast-grep",
+      },
+    },
+  },
+
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",

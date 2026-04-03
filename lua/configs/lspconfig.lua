@@ -1,32 +1,54 @@
 require("nvchad.configs.lspconfig").defaults()
 
+-- Only actual LSP server names belong here — Mason package names (dashes) differ
+-- from LSP server names (underscores). Formatters and linters go in conform.lua
+-- and are installed via mason-tool-installer in plugins/init.lua.
+--
+-- ts_ls and denols both claim .ts files. Root-marker configs in lua/lsp/ts_ls.lua
+-- and lua/lsp/denols.lua prevent them from starting in each other's projects.
+
 local servers = {
+  -- Go
+  "gopls",
+  "golangci_lint_ls",  -- golangci-lint issues as LSP diagnostics (needs .golangci.yml)
+
+  -- TypeScript / JavaScript — Node.js and Bun
+  "ts_ls",             -- typescript-language-server
+  "eslint",            -- eslint-lsp
+  "biome",
+
+  -- TypeScript — Deno (root conflict with ts_ls resolved via lua/lsp/ configs)
+  "denols",
+
+  -- Python
+  "pyright",
+
+  -- Bash / Shell
+  "bashls",            -- bash-language-server
+
+  -- Terraform / OpenTofu
+  "terraformls",       -- terraform-ls
+
+  -- Markdown
+  "marksman",          -- semantic markdown LSP (links, headings, completions)
+
+  -- Data and config formats
+  "jsonls",            -- json-lsp
+  "yamlls",            -- yaml-language-server (covers k8s manifests via schemas)
+
+  -- Kubernetes / Helm
+  "helm_ls",           -- helm-ls
+
+  -- Web
   "html",
   "cssls",
-  "gopls",
-  "gofumpt",
-  "goimports",
-  "gotests",
-  "golangci-lint",
-  "golangci-lint-langserver",
-  "gh",
-  "yamllint",
-  "yq",
-  "gh-actions-language-server",
-  "markdown-toc",
-  "markdownlint-cli2",
-  "deno",
-  "typescript-language-server",
-  "ts-standard",
-  "biome",
-  "prettier",
-  "eslint-lsp",
-  "glow",
-  "ast-grep",
-  "docker-language-server",
-  "dockerfile-language-server",
-  "docker-compose-language-service"
-}
-vim.lsp.enable(servers)
 
--- read :h vim.lsp.config for changing options of lsp servers 
+  -- Containers
+  "dockerls",                        -- docker-language-server (Dockerfiles)
+  "docker_compose_language_service", -- docker-compose.yml
+
+  -- GitHub Actions
+  "github_actions_ls",               -- gh-actions-language-server
+}
+
+vim.lsp.enable(servers)
