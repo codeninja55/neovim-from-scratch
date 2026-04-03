@@ -84,6 +84,67 @@ return {
     end,
   },
 
+  -- Claude Code integration - https://github.com/coder/claudecode.nvim
+  -- Embeds the Claude Code CLI as a terminal split with bidirectional context sharing.
+  -- Requires: Claude Code CLI installed and on PATH.
+  {
+    "coder/claudecode.nvim",
+    dependencies = { "folke/snacks.nvim" },
+    config = true,
+    keys = {
+      { "<leader>a",  nil,                               desc = "claude code" },
+      { "<leader>ac", "<cmd>ClaudeCode<cr>",             desc = "toggle claude" },
+      { "<leader>af", "<cmd>ClaudeCodeFocus<cr>",        desc = "focus claude" },
+      { "<leader>ar", "<cmd>ClaudeCode --resume<cr>",    desc = "resume session" },
+      { "<leader>aC", "<cmd>ClaudeCode --continue<cr>",  desc = "continue session" },
+      { "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>",  desc = "select model" },
+      { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>",        desc = "add buffer to context" },
+      { "<leader>as", "<cmd>ClaudeCodeSend<cr>",         mode = "v",                    desc = "send selection to claude" },
+      { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>",   desc = "accept diff" },
+      { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>",     desc = "deny diff" },
+    },
+    opts = {
+      terminal = {
+        split_side = "right",
+        split_width_percentage = 0.35,
+        provider = "auto",
+        auto_close = true,
+      },
+      diff_opts = {
+        layout = "vertical",
+      },
+    },
+  },
+
+  -- Browser-based markdown preview - https://github.com/iamcco/markdown-preview.nvim
+  -- Opens a live-reloading browser tab. Complements markview (inline) and glow (float).
+  -- Build step only downloads the binary if not already present.
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreview", "MarkdownPreviewToggle", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = "[ -d app/bin ] || bash app/install.sh",
+    init = function()
+      vim.g.mkdp_theme = "dark"
+      vim.g.mkdp_auto_close = 1
+    end,
+  },
+
+  -- Obsidian integration bridge - https://github.com/oflisback/obsidian-bridge.nvim
+  -- Syncs Neovim with Obsidian via the Local REST API plugin.
+  -- Requires: Obsidian Local REST API plugin + OBSIDIAN_REST_API_KEY env var.
+  {
+    "oflisback/obsidian-bridge.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = { "BufReadPre *.md", "BufNewFile *.md" },
+    opts = {
+      obsidian_server_address = "http://localhost:27123",
+      scroll_sync = false,
+      warnings = true,
+      picker = "telescope",
+    },
+  },
+
   -- Inline markdown/HTML/LaTeX/Typst renderer - https://github.com/OXY2DEV/markview.nvim
   {
     "OXY2DEV/markview.nvim",
