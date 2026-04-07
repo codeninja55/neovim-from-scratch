@@ -258,4 +258,15 @@ except Exception as e:
   -- 		},
   -- 	},
   -- },
+
+  -- Override NvChad's nvim-tree defaults to show dotfiles and git-ignored files
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = {
+      filters = {
+        dotfiles = false,
+        git_ignored = false,
+      },
+    },
+  },
 }
