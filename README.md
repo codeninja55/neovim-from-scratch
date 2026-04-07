@@ -1,30 +1,89 @@
 # neovim-from-scratch
 
-Personal Neovim configuration built on [NvChad v2.5](https://github.com/NvChad/NvChad). Targets Neovim 0.12+ on macOS with Ghostty + tmux.
+Personal Neovim configuration built on [NvChad v2.5](https://github.com/NvChad/NvChad). Targets **Neovim 0.12+** on macOS and Ubuntu Linux.
 
 ## Requirements
 
 | Dependency | Version | Notes |
 |---|---|---|
-| [Neovim](https://neovim.io) | 0.12+ | Install via `brew install neovim` |
-| [Ghostty](https://ghostty.org) | any | Terminal emulator — requires `macos-option-as-alt = true` |
-| [tmux](https://github.com/tmux/tmux) | any | Requires `escape-time 0` and `extended-keys always` |
-| [JetBrains Mono Nerd Font](https://www.nerdfonts.com) | any | Used by Ghostty for icons and glyphs |
+| [Neovim](https://neovim.io) | 0.12+ | See platform-specific install below |
+| [JetBrains Mono Nerd Font](https://www.nerdfonts.com) | any | Required for icons and glyphs |
 | [lazygit](https://github.com/jesseduffield/lazygit) | any | Required by lazygit.nvim |
 | [glow](https://github.com/charmbracelet/glow) | any | Required by glow.nvim for markdown preview |
-| Python 3 | 3.7+ | Required by xls-viewer.nvim (`/opt/homebrew/bin/python3`) |
+| Python 3 | 3.7+ | Required by xls-viewer.nvim |
 
-### Python packages (for xls-viewer.nvim)
+Optional (macOS):
 
-```sh
-/opt/homebrew/bin/python3 -m pip install pandas openpyxl xlrd
-```
+| Dependency | Notes |
+|---|---|
+| [Ghostty](https://ghostty.org) | Terminal emulator — requires `macos-option-as-alt = true` |
+| [tmux](https://github.com/tmux/tmux) | Requires `escape-time 0` and `extended-keys always` |
 
-### Homebrew tools
+---
+
+## Installing Neovim
+
+This config requires Neovim 0.12 or later.
+
+### macOS
+
+Install Neovim and supporting tools via [Homebrew](https://brew.sh):
 
 ```sh
 brew install neovim lazygit glow
 ```
+
+Python packages for xls-viewer.nvim:
+
+```sh
+python3 -m pip install pandas openpyxl xlrd
+```
+
+### Ubuntu Linux
+
+> **Do not use `apt install neovim`** — the version in Ubuntu's default repositories is outdated and will not meet the 0.12+ requirement.
+
+The recommended approach is the pre-built archive from GitHub Releases. This always provides the latest stable version.
+
+**1. Download and install the pre-built archive**
+
+```sh
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+sudo rm -rf /opt/nvim-linux-x86_64
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+```
+
+**2. Add Neovim to your PATH**
+
+Add the following to `~/.bashrc` or `~/.zshrc`:
+
+```sh
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+```
+
+Then reload your shell:
+
+```sh
+source ~/.bashrc  # or source ~/.zshrc
+```
+
+**3. Verify the version**
+
+```sh
+nvim --version
+```
+
+Confirm the output shows `v0.12` or later.
+
+**4. Install supporting tools**
+
+```sh
+sudo apt-get update
+sudo apt-get install -y lazygit glow python3 python3-pip
+python3 -m pip install pandas openpyxl xlrd
+```
+
+If `lazygit` is not available via apt, install it from the [lazygit releases page](https://github.com/jesseduffield/lazygit#installation). Similarly, `glow` can be installed from the [glow releases page](https://github.com/charmbracelet/glow#installation) if needed.
 
 ---
 
@@ -48,7 +107,7 @@ mv ~/.config/nvim ~/.config/nvim.bak
 ln -s ~/path/to/neovim-from-scratch ~/.config/nvim
 ```
 
-This means any edits to the repo are immediately live in Neovim, and git tracks all changes.
+Any edits to the repo are immediately live in Neovim, and git tracks all changes.
 
 ### 3. Launch Neovim
 
